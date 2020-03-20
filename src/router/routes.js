@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import login from '../views/sigunUp'
+import home from '../views/home'
 
 Vue.use(Router);
 
 
 export default [
-    // {
-    //     path: '/login',
-    //     name: 'login',
-    //     component: login,
-    // }
+    {
+        path: '/',
+        name: 'home',
+        component: home,
+    }
 
 ]

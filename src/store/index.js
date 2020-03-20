@@ -6,17 +6,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        user: {}
+        user: {},
+        signUpError: {}
     },
     getters: {
         user(state){
             return state.user
+        },
+        signUpError(state){
+            return state.signUpError
         }
     },
     mutations: {
         setUser(state, userObj){
             state.user = userObj;
-        }
+        },
+        setSignUpError(state, errorObj){
+            state.signUpError = errorObj;
+            setTimeout(() => {
+                state.signUpError = {}
+            }, 6000);
+        },
     },
     actions: {
         signUpUser({commit}, user){
@@ -26,7 +36,7 @@ export default new Vuex.Store({
                 }
                 commit('setUser', newUser)
             }).catch(err=>{
-                console.log(err)
+                commit('setSignUpError', err)
             })
         }
     }

@@ -11,7 +11,7 @@
     </v-row>
     <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn type="submit" color="primary">sign up</v-btn>
+        <v-btn :loading="loading" type="submit" color="primary">sign up</v-btn>
     </v-card-actions>
 </v-form>
 </template>
@@ -41,6 +41,9 @@ export default {
     computed: {
         currentUser(){
             return this.$store.getters.user;
+        },
+        loading(){
+            return this.$store.getters.signUpLoading; 
         }
     },
     watch: {
@@ -53,7 +56,7 @@ export default {
     methods: {
         signUp() {
             if (this.$refs.form.validate()) {
-                this.$store.dispatch("signUpUser", this.user)
+                this.$store.dispatch("signUpUser", this.user);
             }
         }
     },

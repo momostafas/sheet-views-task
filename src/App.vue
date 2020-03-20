@@ -1,9 +1,11 @@
 <template>
 <v-app app>
-    <v-content v-if="userIsAuthenticated">
-        <router-view></router-view>
-    </v-content>
-    <signUp v-else />
+    <transition name="fade">
+        <v-content v-if="userIsAuthenticated">
+            <router-view></router-view>
+        </v-content>
+        <signUp v-else />
+    </transition>
 </v-app>
 </template>
 
@@ -12,7 +14,9 @@ import signUp from './views/sigunUp'
 export default {
     name: 'App',
 
-    components: {signUp},
+    components: {
+        signUp
+    },
     computed: {
         userIsAuthenticated() {
             return this.$store.getters.user.id !== null && this.$store.getters.user.id !== undefined
@@ -32,3 +36,16 @@ export default {
     }),
 };
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to
+    {
+    opacity: 0;
+}
+</style>

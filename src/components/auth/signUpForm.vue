@@ -1,5 +1,5 @@
 <template>
-<v-form ref="form" v-model="valid" lazy-validation>
+<v-form ref="form" @submit.prevent="signUp" v-model="valid" lazy-validation>
     <v-row>
         <v-text-field type="email" :rules="emailRules" v-model="user.mail" label="Email" name="email" id="email" />
     </v-row>
@@ -20,8 +20,9 @@
 export default {
     data() {
         return {
+            valid: true,
             user: {
-                name: '',
+                mail: '',
                 password: ''
             },
             emailRules: [
@@ -35,6 +36,25 @@ export default {
             passwordConfimationRules: [
                 v => (v && v == this.user.password) || 'Password not match',
             ],
+        }
+    },
+    computed: {
+        currentUser(){
+            return this.$store.getters.user;
+        }
+    },
+    watch: {
+        currentUser(value){
+            if(value !== null && value !== undefined){
+                this.$router.push('/');
+            }
+        }
+    },
+    methods: {
+        signUp() {
+            if (this.$refs.form.validate()) {
+                this.$store.dispatch("signUpUser", this.user)
+            }
         }
     },
 }
